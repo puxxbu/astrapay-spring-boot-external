@@ -94,6 +94,22 @@ Files
 ================================================================
 
 ================
+File: src/main/java/com/astrapay/configuration/ExampleConfig.java
+================
+package com.astrapay.configuration;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ExampleConfig {
+    // You can use all of the standard DI annotations inside this class.
+    // For example, you can use @Autowired to inject beans into this class.
+
+}
+
+================
 File: src/main/java/com/astrapay/controller/advice/GlobalExceptionHandler.java
 ================
 package com.astrapay.controller.advice;
@@ -205,7 +221,6 @@ public class NoteController {
             @ApiResponse(code = 400, message = "Invalid input, content cannot be empty")
     })
     public ResponseEntity<BaseResponse<NoteDto>> createNote(@Valid @RequestBody CreateNoteRequestDto requestDto) {
-        log.info("POST /notes called with content: {}", requestDto.getContent());
         NoteDto createdNote = noteService.createNote(requestDto);
         return ResponseHelper.created("Note Successfully Added", createdNote);
     }
@@ -432,6 +447,7 @@ public class NoteService {
 
         Note note = new Note();
         note.setContent(requestDto.getContent());
+        note.setTitle(requestDto.getTitle());
 
         Note savedNote = noteRepository.save(note);
         log.info("Note created: {}", savedNote.getId());
@@ -504,6 +520,11 @@ public class SimpleNotesApplication {
         SpringApplication.run(SimpleNotesApplication.class, args);
     }
 }
+
+================
+File: src/main/resources/application.properties
+================
+server.port=8000
 
 ================
 File: src/test/java/com/astrapay/controller/NoteControllerTest.java
@@ -714,6 +735,53 @@ class NoteServiceTest {
 }
 
 ================
+File: .gitignore
+================
+*#
+*.iml
+*.ipr
+*.iws
+*.jar
+*.sw?
+*~
+.#*
+.*.md.html
+.DS_Store
+.attach_pid*
+.classpath
+.factorypath
+.gradle
+.metadata
+.project
+.recommenders
+.settings
+.springBeans
+.vscode
+/code
+MANIFEST.MF
+_site/
+activemq-data
+bin
+build
+!/**/src/**/bin
+!/**/src/**/build
+build.log
+dependency-reduced-pom.xml
+dump.rdb
+interpolated*.xml
+lib/
+manifest.yml
+out
+overridedb.*
+target
+.flattened-pom.xml
+secrets.yml
+.gradletasknamecache
+.sts4-cache
+.git-hooks/
+node_modules
+
+================
 File: postman.json
 ================
 {
@@ -807,74 +875,6 @@ File: postman.json
     }
   ]
 }
-
-================
-File: src/main/java/com/astrapay/configuration/ExampleConfig.java
-================
-package com.astrapay.configuration;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public class ExampleConfig {
-    // You can use all of the standard DI annotations inside this class.
-    // For example, you can use @Autowired to inject beans into this class.
-
-}
-
-================
-File: src/main/resources/application.properties
-================
-server.port=8000
-
-================
-File: .gitignore
-================
-*#
-*.iml
-*.ipr
-*.iws
-*.jar
-*.sw?
-*~
-.#*
-.*.md.html
-.DS_Store
-.attach_pid*
-.classpath
-.factorypath
-.gradle
-.metadata
-.project
-.recommenders
-.settings
-.springBeans
-.vscode
-/code
-MANIFEST.MF
-_site/
-activemq-data
-bin
-build
-!/**/src/**/bin
-!/**/src/**/build
-build.log
-dependency-reduced-pom.xml
-dump.rdb
-interpolated*.xml
-lib/
-manifest.yml
-out
-overridedb.*
-target
-.flattened-pom.xml
-secrets.yml
-.gradletasknamecache
-.sts4-cache
-.git-hooks/
-node_modules
 
 ================
 File: README.md
