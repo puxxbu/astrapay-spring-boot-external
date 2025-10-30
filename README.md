@@ -1,5 +1,7 @@
 # Backend Preview Postman
 
+untuk gambar bisa diakses via direktori PREVIEW
+
 Get All notes
 ![GET All Notes.png](https://github.com/puxxbu/astrapay-spring-boot-external/blob/master/PREVIEW/GET%20All%20Notes.png?raw=true)
 
